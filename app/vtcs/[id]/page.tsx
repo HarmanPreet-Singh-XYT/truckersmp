@@ -429,7 +429,7 @@ export default function VTCDetailPage() {
                 <div className="bg-zinc-900 rounded-xl p-6 border-2 border-white/10">
                   <h2 className="text-2xl font-bold text-white mb-6">Social Media</h2>
                   <div className="space-y-4">
-                    {Object.entries(vtc.socials).map(([platform, url]) => {
+                    {Object.entries(vtc.social).map(([platform, url]) => {
                       if (!url) return null;
                       return (
                         <a 

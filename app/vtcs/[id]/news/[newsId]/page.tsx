@@ -592,7 +592,7 @@ export default function NewsArticlePage() {
               )}
 
               {/* VTC Links */}
-              {(vtc.website || Object.values(vtc.socials).some(link => link)) && (
+              {(vtc.website || Object.values(vtc.social).some(link => link)) && (
                 <section className="bg-zinc-900 rounded-xl p-6 border-2 border-white/10">
                   <h3 className="text-xl font-bold text-white mb-4">VTC Links</h3>
                   <nav className="space-y-3" aria-label="VTC external links">
@@ -610,7 +610,7 @@ export default function NewsArticlePage() {
                       </a>
                     )}
                     
-                    {Object.entries(vtc.socials).map(([platform, url]) => {
+                    {Object.entries(vtc.social).map(([platform, url]) => {
                       if (!url) return null;
                       
                       const platformIcons: Record<string, any> = {
