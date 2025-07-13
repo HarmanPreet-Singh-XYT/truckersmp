@@ -1,5 +1,5 @@
 // TruckersMP API Client
-const API_BASE = process.env.API_BASE ? process.env.API_BASE : 'http://localhost:4004';
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE ? process.env.NEXT_PUBLIC_API_BASE : 'http://localhost:4004';
 
 export class TruckersAPI {
   private static async request<T>(endpoint: string): Promise<T> {
