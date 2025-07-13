@@ -777,27 +777,27 @@ export interface VTCSocials {
   /**
    * The URL to the company's Twitter.
    */
-  twitter: string;
+  twitter: string | null;
 
   /**
    * The URL to the company's Facebook.
    */
-  facebook: string;
+  facebook: string | null;
 
   /**
    * The URL to the company's Twitch.
    */
-  twitch: string;
+  twitch: string | null;
 
   /**
    * The URL to the company's Discord.
    */
-  discord: string;
+  discord: string | null;
 
   /**
    * The URL to the company's YouTube.
    */
-  youtube: string;
+  youtube: string | null;
 }
 
 /**
@@ -877,12 +877,12 @@ export interface VTC {
   /**
    * The URL to the company's website.
    */
-  website: string;
+  website: string | null;
 
   /**
    * A collection of social media profiles of the company.
    */
-  socials: VTCSocials;
+  social: VTCSocials;
 
   /**
    * A collection of games that the company supports.

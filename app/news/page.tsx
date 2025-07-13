@@ -533,7 +533,7 @@ export default function NewsPage() {
 
             {searchTerm && (
               <div className="text-sm text-gray-400">
-                Found {processedNews.length} result{processedNews.length !== 1 ? 's' : ''} for "{searchTerm}"
+                Found {processedNews.length} result{processedNews.length !== 1 ? 's' : ''} for {`"`}{searchTerm}{`"`}
               </div>
             )}
           </div>
