@@ -148,7 +148,7 @@ const ErrorState = ({ error, onRetry }: { error: string; onRetry?: () => void })
 
 // Related news item component
 const RelatedNewsItem = ({ article, vtcId }: { article: VTCNews; vtcId: number }) => (
-  <Link href={`/news/${vtcId}/${article.id}`}>
+  <Link href={`/vtcs/${vtcId}/news/${article.id}`}>
     <article className="bg-black rounded-lg p-4 hover:bg-white/5 transition-all duration-200 cursor-pointer group">
       <div className="flex items-start justify-between mb-2">
         <h4 className="text-white font-medium text-sm line-clamp-2 flex-1 group-hover:text-red-400 transition-colors">
@@ -276,7 +276,7 @@ export default function NewsArticlePage() {
     <div className="min-h-screen bg-black">
       <Navigation />
       
-      <main className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+      <main className="pt-32 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Breadcrumb Navigation */}
           <nav className="mb-8 flex flex-wrap items-center gap-2 text-sm" aria-label="Breadcrumb">
@@ -423,7 +423,7 @@ export default function NewsArticlePage() {
                 <footer className="mt-12 pt-8 border-t border-white/10">
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div className="text-sm text-gray-400">
-                      <p>Published by <span className="text-white font-medium">{news.author}</span></p>
+                      <p>Published by <Link href={`/players/${news.author_id}`}><span className="text-white hover:text-red-400 font-medium">{news.author}</span></Link></p>
                       <p className="mt-1">
                         Article ID: <span className="text-white font-mono">#{news.id}</span>
                       </p>
@@ -460,7 +460,7 @@ export default function NewsArticlePage() {
                   </div>
                   <div className="flex justify-between">
                     <dt className="text-gray-400">Author</dt>
-                    <dd className="text-white">{news.author}</dd>
+                    <Link href={`/players/${news.author_id}`}><dd className="text-white hover:text-red-400">{news.author}</dd></Link>
                   </div>
                   <div className="flex justify-between">
                     <dt className="text-gray-400">Published</dt>

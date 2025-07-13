@@ -116,7 +116,7 @@ export default function RulesPage() {
     <div className="min-h-screen bg-black">
       <Navigation />
       
-      <div className="pt-24 pb-12 px-4 sm:px-6">
+      <div className="pt-32 pb-12 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">

@@ -28,6 +28,7 @@ import Link from 'next/link';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ReactMarkdown from 'react-markdown';
 import Footer from '@/components/footer';
+import { FaDiscord, FaFacebook, FaTwitter, FaYoutube } from 'react-icons/fa';
 
 export default function VTCDetailPage() {
   const params = useParams();
@@ -99,10 +100,11 @@ export default function VTCDetailPage() {
 
   const getSocialIcon = (platform: string) => {
     switch (platform) {
-      case 'twitter': return <Twitter className="w-5 h-5" />;
-      case 'facebook': return <Facebook className="w-5 h-5" />;
-      case 'youtube': return <Youtube className="w-5 h-5" />;
-      default: return <ExternalLink className="w-5 h-5" />;
+      case 'twitter': return <FaTwitter color='white' className="w-5 h-5" />;
+      case 'facebook': return <FaFacebook color='white' className="w-5 h-5" />;
+      case 'youtube': return <FaYoutube color='white' className="w-5 h-5" />;
+      case 'discord': return <FaDiscord color='white' className="w-5 h-5" />;
+      default: return <ExternalLink color='white' className="w-5 h-5" />;
     }
   };
 
@@ -110,7 +112,7 @@ export default function VTCDetailPage() {
     <div className="min-h-screen bg-black">
       <Navigation />
       
-      <div className="pt-24 pb-12 px-6">
+      <div className="pt-32 pb-12 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Back Button */}
           <div className="mb-8">
@@ -174,7 +176,7 @@ export default function VTCDetailPage() {
                     </div>
                     <div className="flex items-center space-x-2">
                       <User className="w-5 h-5 text-red-500" />
-                      <span>Owner: {vtc.owner_username}</span>
+                      <Link href={`/players/${vtc.owner_id}`}><span className='hover:text-red-400'>Owner: {vtc.owner_username}</span></Link>
                     </div>
                     <div className="flex items-center space-x-2">
                       <Globe className="w-5 h-5 text-red-500" />
@@ -290,15 +292,16 @@ export default function VTCDetailPage() {
                   {news.length > 0 && (
                     <div className="bg-zinc-900 rounded-xl p-6 border-2 border-white/10">
                       <h3 className="text-xl font-bold text-white mb-4">Latest News</h3>
-                      <div className="space-y-4">
+                      <div className="space-y-4 grid">
                         {news.slice(0, 3).map((article) => (
-                          <div key={article.id} className="bg-black rounded-lg p-4">
+                          <Link key={article.id} href={`/vtcs/${vtc.id}/news/${article.id}`}><div className="bg-black hover:bg-black/60 rounded-lg p-4">
                             <h4 className="text-white font-medium mb-2">{article.title}</h4>
                             <p className="text-gray-400 text-sm mb-2">{article.content_summary}</p>
                             <div className="text-gray-500 text-xs">
                               by {article.author} • {formatDistanceToNow(new Date(article.published_at), { addSuffix: true })}
                             </div>
                           </div>
+                          </Link>
                         ))}
                       </div>
                     </div>
@@ -342,9 +345,9 @@ export default function VTCDetailPage() {
             </TabsContent>
 
             <TabsContent value="news">
-              <div className="space-y-6">
+              <div className="space-y-6 grid">
                 {news.map((article) => (
-                  <div key={article.id} className="bg-zinc-900 rounded-xl p-6 border-2 border-white/10">
+                  <Link key={article.id} href={`/vtcs/${vtc.id}/news/${article.id}`}><div className="bg-zinc-900 rounded-xl p-6 border-2 border-white/10 hover:border-red-500/50 transition-colors cursor-pointer">
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
                         <h3 className="text-xl font-bold text-white mb-2">{article.title}</h3>
@@ -363,6 +366,7 @@ export default function VTCDetailPage() {
                     </div>
                     <p className="text-gray-300 leading-relaxed">{article.content_summary}</p>
                   </div>
+                  </Link>
                 ))}
                 {news.length === 0 && (
                   <div className="bg-zinc-900 rounded-xl p-12 border-2 border-white/10 text-center">
@@ -406,7 +410,7 @@ export default function VTCDetailPage() {
                         </div>
                       </div>
                       {event.description && (
-                        <p className="text-gray-300 line-clamp-2">{event.description.replace(/<[^>]*>/g, '')}</p>
+                        <p className="text-gray-300 line-clamp-2"><ReactMarkdown>{event.description}</ReactMarkdown></p>
                       )}
                     </div>
                   </Link>
@@ -467,7 +471,7 @@ export default function VTCDetailPage() {
                     </div>
                     <div>
                       <div className="text-gray-400 text-sm">Owner</div>
-                      <div className="text-white font-medium">{vtc.owner_username}</div>
+                      <div className="text-white font-medium hover:text-red-400"><Link href={`/players/${vtc.owner_id}`}>{vtc.owner_username}</Link></div>
                     </div>
                     <div>
                       <div className="text-gray-400 text-sm">Tag</div>

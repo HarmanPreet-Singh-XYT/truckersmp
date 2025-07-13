@@ -43,7 +43,6 @@ const SORT_OPTIONS = {
 
 const TAB_OPTIONS = {
   FEATURED: 'featured',
-  NOW: 'now',
   TODAY: 'today',
   UPCOMING: 'upcoming'
 } as const;
@@ -209,7 +208,6 @@ export default function EventsPage() {
   const currentTabEvents = useMemo(() => {
     const eventMap = {
       [TAB_OPTIONS.FEATURED]: events.featured,
-      // [TAB_OPTIONS.NOW]: events.now,
       [TAB_OPTIONS.TODAY]: events.today,
       [TAB_OPTIONS.UPCOMING]: events.upcoming
     };
@@ -250,7 +248,7 @@ export default function EventsPage() {
     <div className="min-h-screen bg-black">
       <Navigation />
       
-      <div className="pt-24 pb-12 px-6">
+      <div className="pt-32 pb-12 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <motion.div 
@@ -393,8 +391,8 @@ export default function EventsPage() {
                     description={
                       debouncedSearchTerm
                         ? "Try adjusting your search terms"
-                        : activeTab === TAB_OPTIONS.NOW
-                        ? "Check back soon for live events!"
+                        // : activeTab === TAB_OPTIONS.NOW
+                        // ? "Check back soon for live events!"
                         : activeTab === TAB_OPTIONS.TODAY
                         ? "Check upcoming events for future activities!"
                         : "No events to display at this time"

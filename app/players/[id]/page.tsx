@@ -110,7 +110,7 @@ export default function PlayerDetailPage() {
       <div className="min-h-screen bg-black">
         <Navigation />
         
-        <div className="pt-24 pb-12 px-6">
+        <div className="pt-32 pb-12 px-6">
           <div className="max-w-7xl mx-auto">
             {/* Back Button */}
             <div className="mb-8">
@@ -216,7 +216,7 @@ export default function PlayerDetailPage() {
                     </div>
                     <div>
                       <div className="text-gray-400">Steam ID</div>
-                      <div className="text-white font-medium">{player.steamID}</div>
+                      <Link href={`	https://steamcommunity.com/profiles/${player.steamID}`}><div className="text-white hover:text-red-400 font-medium">{player.steamID}</div></Link>
                     </div>
                     <div>
                       <div className="text-gray-400 flex items-center space-x-1">
@@ -285,10 +285,10 @@ export default function PlayerDetailPage() {
                   VTC {player.displayVTCHistory ? '' : '🔒'}
                 </TabsTrigger>
                 <TabsTrigger value="achievements" className="data-[state=active]:bg-red-500">
-                  Achievements ({player.achievements.length})
+                  Achievements ({player.achievements != null ? player.achievements.length : '🔒'})
                 </TabsTrigger>
                 <TabsTrigger value="awards" className="data-[state=active]:bg-red-500">
-                  Awards ({player.awards.length})
+                  Awards ({player.awards != null ? player.awards.length : '🔒'})
                 </TabsTrigger>
                 <TabsTrigger value="bans" className="data-[state=active]:bg-red-500">
                   Bans {player.displayBans ? `(${bans.length})` : '🔒'}
@@ -306,11 +306,11 @@ export default function PlayerDetailPage() {
                       <h2 className="text-2xl font-bold text-white mb-6">Player Statistics</h2>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                         <div className="text-center">
-                          <div className="text-3xl font-bold text-white">{player.achievements.length}</div>
+                          <div className="text-3xl font-bold text-white">{player.achievements != null ? player.achievements.length : '🔒'}</div>
                           <div className="text-gray-400">Achievements</div>
                         </div>
                         <div className="text-center">
-                          <div className="text-3xl font-bold text-white">{player.awards.length}</div>
+                          <div className="text-3xl font-bold text-white">{player.awards != null ? player.awards.length : '🔒'}</div>
                           <div className="text-gray-400">Awards</div>
                         </div>
                         <div className="text-center">
@@ -327,7 +327,7 @@ export default function PlayerDetailPage() {
                     </div>
 
                                         {/* Recent Achievements */}
-                    {player.achievements.length > 0 && (
+                    {player.achievements != null && player.achievements.length > 0 && (
                       <div className="bg-zinc-900 rounded-xl p-6 border-2 border-white/10">
                         <h2 className="text-2xl font-bold text-white mb-6">Recent Achievements</h2>
                         <div className="space-y-4">
@@ -543,10 +543,10 @@ export default function PlayerDetailPage() {
                       <div className="flex items-center space-x-4 p-4 bg-black rounded-lg">
                         <Building2 className="w-12 h-12 text-blue-500" />
                         <div className="flex-1">
-                          <h3 className="text-xl font-bold text-white">
+                          <Link href={`/vtcs/${player.vtc.id}`}><h3 className="text-xl hover:text-red-400 font-bold text-white">
                             {player.vtc.name} 
                             <span className="text-gray-400 font-normal ml-2">[{player.vtc.tag}]</span>
-                          </h3>
+                          </h3></Link>
                           <div className="flex items-center space-x-4 text-gray-400">
                             <span>VTC ID: #{player.vtc.id}</span>
                             <span>Member ID: #{player.vtc.memberID}</span>
@@ -577,7 +577,7 @@ export default function PlayerDetailPage() {
                                     {vtc.name}
                                   </Link>
                                   {vtc.verified && (
-                                    <Badge variant="outline" className="text-xs">
+                                    <Badge variant="secondary" className="text-xs">
                                       <CheckCircle className="w-3 h-3 mr-1" />
                                       Verified
                                     </Badge>
@@ -625,9 +625,9 @@ export default function PlayerDetailPage() {
 
               <TabsContent value="achievements">
                 <div className="bg-zinc-900 rounded-xl p-6 border-2 border-white/10">
-                  <h2 className="text-2xl font-bold text-white mb-6">Achievements ({player.achievements.length})</h2>
+                  <h2 className="text-2xl font-bold text-white mb-6">Achievements ({player.achievements != null ? player.achievements.length : '🔒'})</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {player.achievements.map((achievement) => (
+                    {player.achievements != null && player.achievements.map((achievement) => (
                       <div key={achievement.id} className="flex items-center space-x-4 p-4 bg-black rounded-lg hover:bg-black/70 transition-colors">
                         <img 
                           src={achievement.image_url} 
@@ -645,7 +645,7 @@ export default function PlayerDetailPage() {
                       </div>
                     ))}
                   </div>
-                                    {player.achievements.length === 0 && (
+                                    {player.achievements != null && player.achievements.length === 0 && (
                     <div className="text-center py-12">
                       <Trophy className="w-16 h-16 text-gray-600 mx-auto mb-4" />
                       <div className="text-gray-400 text-xl">No achievements earned yet</div>
@@ -656,9 +656,9 @@ export default function PlayerDetailPage() {
 
               <TabsContent value="awards">
                 <div className="bg-zinc-900 rounded-xl p-6 border-2 border-white/10">
-                  <h2 className="text-2xl font-bold text-white mb-6">Awards ({player.awards.length})</h2>
+                  <h2 className="text-2xl font-bold text-white mb-6">Awards ({player.awards != null ? player.awards.length : '🔒'})</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {player.awards.map((award) => (
+                    {player.awards != null && player.awards.map((award) => (
                       <div key={award.id} className="bg-black rounded-lg p-4 hover:bg-black/70 transition-colors">
                         <div className="flex flex-col items-center text-center">
                           <img 
@@ -681,7 +681,7 @@ export default function PlayerDetailPage() {
                       </div>
                     ))}
                   </div>
-                  {player.awards.length === 0 && (
+                  {player.awards != null && player.awards.length === 0 && (
                     <div className="text-center py-12">
                       <Award className="w-16 h-16 text-gray-600 mx-auto mb-4" />
                       <div className="text-gray-400 text-xl">No awards received yet</div>

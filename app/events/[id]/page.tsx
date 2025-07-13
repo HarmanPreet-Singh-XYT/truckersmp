@@ -208,7 +208,7 @@ export default function EventDetailPage() {
     <div className="min-h-screen bg-black">
       <Navigation />
       
-      <div className="pt-24 pb-12 px-6">
+      <div className="pt-32 pb-12 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Back Button */}
           <div className="mb-8">
@@ -553,7 +553,7 @@ export default function EventDetailPage() {
                   <div className="flex items-center space-x-3 p-3 bg-black rounded-lg">
                     <User className="w-8 h-8 text-red-500" />
                     <div className="flex-1">
-                      <div className="text-white font-medium">{event.user.username}</div>
+                      <div className="text-white font-medium hover:text-red-400"><Link href={`/players/${event.user.id}`}>{event.user.username}</Link></div>
                       <div className="text-gray-400 text-sm">Event Creator</div>
                       <div className="text-gray-500 text-xs">ID: {event.user.id}</div>
                     </div>
@@ -563,7 +563,7 @@ export default function EventDetailPage() {
                     <div className="flex items-center space-x-3 p-3 bg-black rounded-lg">
                       <Building2 className="w-8 h-8 text-blue-500" />
                       <div className="flex-1">
-                        <div className="text-white font-medium">{event.vtc.name}</div>
+                        <div className="text-white font-medium hover:text-red-400"><Link href={`/vtcs/${event.vtc.id}`}>{event.vtc.name}</Link></div>
                         <div className="text-gray-400 text-sm">Organizing VTC</div>
                         <div className="text-gray-500 text-xs">ID: {event.vtc.id}</div>
                       </div>
@@ -618,14 +618,34 @@ export default function EventDetailPage() {
               {event.dlcs && (
                 <InfoCard title="Required DLCs" icon={Gamepad2}>
                   <div className="bg-black rounded-lg p-4">
-                    <div className="text-yellow-400 text-sm mb-2">Steam App ID</div>
-                    <div className="text-white font-mono">{event.dlcs.dlc_id}</div>
+                    {Object.keys(event.dlcs).length > 0 ? (
+                      <>
+                        <div className="text-yellow-400 text-sm mb-2">Required DLCs</div>
+                        {Object.entries(event.dlcs).map(([dlcId, dlcName]) => (
+                          <a
+                            key={dlcId}
+                            href={`https://store.steampowered.com/app/${dlcId}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex justify-between border-b border-gray-700 py-1 hover:bg-gray-800 rounded transition-colors"
+                          >
+                            <span className="text-white font-mono">{dlcId}</span>
+                            <span className="text-gray-300">{dlcName}</span>
+                          </a>
+                        ))}
+                        <p className="text-gray-400 text-sm mt-3">
+                          This event requires specific DLC content to participate.
+                        </p>
+                      </>
+                    ) : (
+                      <div className="text-green-400 text-sm">
+                        This event does not require any DLC content to participate.
+                      </div>
+                    )}
                   </div>
-                  <p className="text-gray-400 text-sm mt-3">
-                    This event requires specific DLC content to participate.
-                  </p>
                 </InfoCard>
               )}
+
 
               {/* Event Meta */}
               <InfoCard title="Event Information" icon={Hash}>

@@ -278,7 +278,7 @@ export default function VTCsPage() {
     <div className="min-h-screen bg-black">
       <Navigation />
       
-      <main className="pt-24 pb-12 px-6">
+      <main className="pt-32 pb-12 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <header className="text-center mb-12">

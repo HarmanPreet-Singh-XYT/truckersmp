@@ -194,7 +194,7 @@ export default function HomePage() {
       </AnimatePresence>
       
       {/* Hero Section */}
-      <section className="pt-24 pb-20 px-6 relative overflow-hidden">
+      <section className="pt-32 pb-20 px-6 relative overflow-hidden">
         {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 via-transparent to-transparent" />
         
@@ -276,7 +276,7 @@ export default function HomePage() {
 
       {/* Featured Events */}
       {events.featured.length > 0 && (
-        <section className="py-20 px-6">
+        <section className="px-6">
           <div className="max-w-7xl mx-auto">
             <motion.div 
               initial={{ opacity: 0 }}
@@ -351,7 +351,7 @@ export default function HomePage() {
 
       {/* Featured VTCs */}
       {vtcs.featured.length > 0 && (
-        <section className="py-20 px-6">
+        <section className="px-6">
           <div className="max-w-7xl mx-auto">
             <motion.div
               initial={{ opacity: 0 }}
@@ -445,7 +445,7 @@ export default function HomePage() {
             <div className="absolute -inset-[1px] bg-gradient-to-r from-red-500 via-red-600 to-red-500 rounded-2xl opacity-75 group-hover:opacity-100 blur-sm transition duration-1000 group-hover:duration-200 animate-gradient-xy" />
             
             {/* Main content */}
-            <div className="relative bg-zinc-900/90 backdrop-blur-xl rounded-2xl p-8 md:p-12 lg:p-16 border border-zinc-800">
+            <div className="relative bg-zinc-900/90 backdrop-blur-xl rounded-2xl p-8 md:p-8 lg:p-12 border border-zinc-800">
               {/* Badge */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -547,19 +547,19 @@ export default function HomePage() {
                 transition={{ delay: 0.6 }}
                 className="mt-5 border-t border-zinc-800 flex flex-wrap justify-center items-center gap-6 text-sm text-gray-500"
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 mt-6">
                   <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                   Free to Play
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 mt-6">
                   <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                   No Credit Card Required
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 mt-6">
                   <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
