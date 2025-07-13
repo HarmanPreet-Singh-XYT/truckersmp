@@ -217,7 +217,7 @@ const Footer = () => {
                     © {new Date().getFullYear()} TruckersMP Dashboard. All rights reserved.
                   </p>
                   <p className="text-xs text-gray-600 mt-1">
-                    Built with ❤️ using Next.js and TruckersMP API
+                    Built with ❤️ using Next.js and TruckersMP API, Developed By <Link className='hover:text-red-400 underline' href={`https://harman.vercel.app`}>Harman</Link>
                   </p>
                 </div>
                 <p className="text-xs text-gray-600">
