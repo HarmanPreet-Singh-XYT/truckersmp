@@ -30,13 +30,13 @@ const Footer = () => {
                 </h3>
                 <ul className="space-y-3">
                   <li>
-                    <Link href="/forums" className="text-gray-400 hover:text-blue-400 transition-colors duration-200 flex items-center gap-1 group">
+                    <Link href="https://forum.truckersmp.com/" className="text-gray-400 hover:text-blue-400 transition-colors duration-200 flex items-center gap-1 group">
                       Forums
                       <FaExternalLinkAlt className="text-xs opacity-0 group-hover:opacity-100 transition-opacity" />
                     </Link>
                   </li>
                   <li>
-                    <Link href="/discord" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
+                    <Link href="https://discord.com/invite/truckersmp" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
                       Discord Server
                     </Link>
                   </li>
@@ -60,20 +60,20 @@ const Footer = () => {
                 </h3>
                 <ul className="space-y-3">
                   <li>
-                    <Link href="/download" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
+                    <Link href="https://truckersmp.com/download" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
                       Download Client
                     </Link>
                   </li>
                   <li>
-                    <Link href="/guides" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
+                    <Link href="https://forum.truckersmp.com/index.php?/forum/111-guides/" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
                       Getting Started
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link href="/mods" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
                       Supported Mods
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link href="/servers" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
                       Server Status
@@ -89,25 +89,25 @@ const Footer = () => {
                 </h3>
                 <ul className="space-y-3">
                   <li>
-                    <Link href="/help" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
+                    <Link href="https://forum.truckersmp.com/index.php?/forum/55-help/" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
                       Help Center
                     </Link>
                   </li>
                   <li>
-                    <Link href="/contact" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
+                    <Link href="https://truckersmp.com/support" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
                       Contact Us
                     </Link>
                   </li>
                   <li>
-                    <Link href="/appeals" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
+                    <Link href="https://truckersmp.com/appeals" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
                       Ban Appeals
                     </Link>
                   </li>
-                  <li>
-                    <Link href="/bugs" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
+                  {/* <li>
+                    <Link href="https://truckersmp.com/support" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
                       Report Bug
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
 
@@ -118,18 +118,18 @@ const Footer = () => {
                 </h3>
                 <ul className="space-y-3">
                   <li>
-                    <Link href="/privacy" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
+                    <Link href="https://truckersmp.com/policy" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
                       Privacy Policy
                     </Link>
                   </li>
                   <li>
-                    <Link href="/terms" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
+                    <Link href="https://truckersmp.com/terms" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
                       Terms of Service
                     </Link>
                   </li>
                   <li>
-                    <Link href="/cookies" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
-                      Cookie Policy
+                    <Link href="https://truckersmp.com/code-of-conduct" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
+                      Code of Conduct
                     </Link>
                   </li>
                 </ul>
@@ -165,31 +165,31 @@ const Footer = () => {
             {/* Social Links */}
             <div className="flex flex-col md:flex-row items-center justify-between gap-6 py-8 border-t border-zinc-800">
               <div className="flex items-center gap-4">
-                <span className="text-gray-400 text-sm">Follow us:</span>
+                <span className="text-gray-400 text-sm">Follow TruckersMP:</span>
                 <div className="flex items-center gap-3">
                   <Link
-                    href="/discord"
+                    href="https://discord.com/invite/truckersmp"
                     className="text-gray-400 hover:text-[#5865F2] transition-colors duration-200"
                     aria-label="Discord"
                   >
                     <FaDiscord className="text-xl" />
                   </Link>
                   <Link
-                    href="/twitter"
+                    href="https://x.com/truckersmp"
                     className="text-gray-400 hover:text-[#1DA1F2] transition-colors duration-200"
                     aria-label="Twitter"
                   >
                     <FaTwitter className="text-xl" />
                   </Link>
                   <Link
-                    href="/youtube"
+                    href="https://www.youtube.com/TruckersMPOfficial"
                     className="text-gray-400 hover:text-[#FF0000] transition-colors duration-200"
                     aria-label="YouTube"
                   >
                     <FaYoutube className="text-xl" />
                   </Link>
                   <Link
-                    href="/twitch"
+                    href="https://www.twitch.tv/TruckersMP_Official"
                     className="text-gray-400 hover:text-[#9146FF] transition-colors duration-200"
                     aria-label="Twitch"
                   >

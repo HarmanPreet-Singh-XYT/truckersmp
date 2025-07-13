@@ -495,7 +495,7 @@ export default function HomePage() {
                 className="flex flex-col sm:flex-row gap-4 justify-center items-center"
               >
                 <Link
-                  href="/register"
+                  href="https://truckersmp.com/auth/register"
                   className="group relative px-8 py-4 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl font-medium transition-all duration-200 hover:shadow-lg hover:shadow-red-500/25 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
                 >
                   <span className="relative z-10 flex items-center gap-2">
@@ -517,7 +517,7 @@ export default function HomePage() {
                 </Link>
 
                 <Link
-                  href="/download"
+                  href="https://truckersmp.com/download"
                   className="group relative px-8 py-4 bg-zinc-800 text-white rounded-xl font-medium transition-all duration-200 hover:bg-zinc-700 hover:shadow-lg hover:shadow-zinc-700/25 hover:-translate-y-0.5 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
                 >
                   <span className="flex items-center gap-2">
