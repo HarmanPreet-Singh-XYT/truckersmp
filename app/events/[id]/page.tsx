@@ -232,10 +232,13 @@ export default function EventDetailPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent"></div>
               </div>
             )}
-            <div className="relative bg-zinc-900/60 backdrop-blur rounded-xl p-8 border-2 border-white/10">
-              <div className="flex items-start justify-between mb-6">
+
+            <div className="relative bg-zinc-900/60 backdrop-blur rounded-xl p-6 md:p-8 border-2 border-white/10">
+              <div className="flex flex-col lg:flex-row gap-6">
+
+                {/* Left content */}
                 <div className="flex-1">
-                  <div className="flex flex-wrap items-center gap-3 mb-4">
+                  <div className="flex flex-wrap items-center gap-2 mb-4">
                     <Badge className="bg-red-500 text-white">
                       {event.event_type.name}
                     </Badge>
@@ -261,8 +264,12 @@ export default function EventDetailPage() {
                       </Badge>
                     )}
                   </div>
-                  <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">{event.name}</h1>
-                  <div className="flex flex-wrap items-center gap-6 text-gray-300">
+
+                  <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
+                    {event.name}
+                  </h1>
+
+                  <div className="flex flex-col sm:flex-row flex-wrap gap-4 text-gray-300">
                     <div className="flex items-center space-x-2">
                       <NavigationIcon className="w-5 h-5 text-red-500" />
                       <span>{event.departure.city} → {event.arrive.city}</span>
@@ -281,9 +288,9 @@ export default function EventDetailPage() {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Attendance Stats */}
-                <div className="bg-black/50 backdrop-blur rounded-xl p-6 min-w-[220px] hidden lg:block">
+                <div className="bg-black/50 backdrop-blur rounded-xl p-6 min-w-[220px] block">
                   <h3 className="text-lg font-bold text-white mb-4 flex items-center">
                     <Users className="w-5 h-5 mr-2 text-red-500" />
                     Attendance
@@ -319,9 +326,12 @@ export default function EventDetailPage() {
                     </Button>
                   )}
                 </div>
+              
+
               </div>
             </div>
           </div>
+
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Content */}
@@ -370,7 +380,7 @@ export default function EventDetailPage() {
                 </InfoCard>
               )}
 
-                            {/* Attendees List (if toggled) */}
+              {/* Attendees List (if toggled) */}
               {showAttendees && (event.attendances.confirmed_users || event.attendances.unsure_users) && (
                 <InfoCard title="Event Attendees" icon={Users}>
                   {event.attendances.confirmed_users && event.attendances.confirmed_users.length > 0 && (
@@ -501,7 +511,7 @@ export default function EventDetailPage() {
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="w-full mt-4 border-white/20 text-white hover:bg-white/10"
+                      className="w-full mt-4 border-white/20 hover:text-white hover:bg-white/10"
                       onClick={() => setShowAttendees(!showAttendees)}
                     >
                       View Attendees

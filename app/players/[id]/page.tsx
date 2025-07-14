@@ -124,7 +124,7 @@ export default function PlayerDetailPage() {
 
             {/* Player Header */}
             <div className="bg-zinc-900 rounded-xl p-8 border-2 border-white/10 mb-8">
-              <div className="flex items-start space-x-6">
+              <div className="flex flex-col sm:flex-row items-start space-x-6">
                 <div className="relative">
                   <img 
                     src={player.avatar} 
@@ -195,7 +195,7 @@ export default function PlayerDetailPage() {
                     )}
                   </div>
                   
-                  <h1 className="text-5xl font-bold text-white mb-4">{player.name}</h1>
+                  <h1 className="text-3xl sm:text-5xl font-bold text-white mb-4">{player.name}</h1>
                   
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm">
                     <div>
@@ -277,7 +277,7 @@ export default function PlayerDetailPage() {
 
             {/* Content Tabs */}
             <Tabs defaultValue="overview" className="w-full">
-              <TabsList className="grid w-full grid-cols-6 mb-8 bg-zinc-900">
+              <TabsList className="grid w-full h-18 md:h-auto grid-cols-3 md:grid-cols-6 mb-8 bg-zinc-900">
                 <TabsTrigger value="overview" className="data-[state=active]:bg-red-500">
                   Overview
                 </TabsTrigger>

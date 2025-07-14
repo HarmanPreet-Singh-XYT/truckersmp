@@ -136,17 +136,20 @@ export default function VTCDetailPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
               </div>
             )}
-            <div className="relative bg-zinc-900/60 rounded-xl p-8 border-2 border-white/10">
-              <div className="flex items-start space-x-6">
+
+            <div className="relative bg-zinc-900/60 rounded-xl p-6 md:p-8 border-2 border-white/10">
+              <div className="flex flex-col md:flex-row items-start md:space-x-6 gap-y-6">
+                
                 {vtc.logo && (
                   <img 
                     src={vtc.logo} 
                     alt={vtc.name}
-                    className="w-24 h-24 rounded-xl border-2 border-white/10"
+                    className="w-20 h-20 md:w-24 md:h-24 rounded-xl border-2 border-white/10"
                   />
                 )}
+
                 <div className="flex-1">
-                  <div className="flex items-center space-x-4 mb-4">
+                  <div className="flex flex-wrap items-center gap-2 mb-4">
                     <Badge className="bg-red-500 text-white">
                       [{vtc.tag}]
                     </Badge>
@@ -165,18 +168,29 @@ export default function VTCDetailPage() {
                       {vtc.recruitment}
                     </Badge>
                   </div>
-                  <h1 className="text-5xl font-bold text-white mb-4">{vtc.name}</h1>
+
+                  <h1 className="text-3xl md:text-5xl font-bold text-white mb-3 md:mb-4">
+                    {vtc.name}
+                  </h1>
+
                   {vtc.slogan && (
-                    <p className="text-xl text-gray-300 mb-4">{vtc.slogan}</p>
+                    <p className="text-lg md:text-xl text-gray-300 mb-4">
+                      {vtc.slogan}
+                    </p>
                   )}
-                  <div className="flex items-center space-x-6 text-gray-300">
+
+                  <div className="flex flex-col sm:flex-row flex-wrap gap-y-2 sm:items-center sm:space-x-6 text-gray-300">
                     <div className="flex items-center space-x-2">
                       <Users className="w-5 h-5 text-red-500" />
                       <span>{vtc.members_count} members</span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <User className="w-5 h-5 text-red-500" />
-                      <Link href={`/players/${vtc.owner_id}`}><span className='hover:text-red-400'>Owner: {vtc.owner_username}</span></Link>
+                      <Link href={`/players/${vtc.owner_id}`}>
+                        <span className="hover:text-red-400">
+                          Owner: {vtc.owner_username}
+                        </span>
+                      </Link>
                     </div>
                     <div className="flex items-center space-x-2">
                       <Globe className="w-5 h-5 text-red-500" />
@@ -187,10 +201,12 @@ export default function VTCDetailPage() {
                       <span>Founded {formatDistanceToNow(new Date(vtc.created), { addSuffix: true })}</span>
                     </div>
                   </div>
+
                 </div>
               </div>
             </div>
           </div>
+
 
           {/* Games Supported */}
           <div className="mb-8">
@@ -207,7 +223,7 @@ export default function VTCDetailPage() {
 
           {/* Content Tabs */}
           <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-5 mb-8 bg-zinc-900">
+            <TabsList className="grid w-full md:h-auto h-18 grid-cols-3 md:grid-cols-5 mb-8 bg-zinc-900">
               <TabsTrigger value="overview" className="data-[state=active]:bg-red-500">
                 Overview
               </TabsTrigger>
