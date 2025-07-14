@@ -610,7 +610,7 @@ export default function NewsArticlePage() {
                       </a>
                     )}
                     
-                    {Object.entries(vtc.social).map(([platform, url]) => {
+                    {vtc.social != null && Object.entries(vtc.social).map(([platform, url]) => {
                       if (!url) return null;
                       
                       const platformIcons: Record<string, any> = {

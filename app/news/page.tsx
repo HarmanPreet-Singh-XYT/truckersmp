@@ -5,12 +5,12 @@ import { Navigation } from '@/components/ui/navigation';
 import { StatCard } from '@/components/ui/stat-card';
 import { TruckersAPI } from '@/lib/api';
 import { VTC, VTCNews } from '@/types/api';
-import { 
-  Newspaper, 
-  Pin, 
-  Calendar, 
-  User, 
-  Building2, 
+import {
+  Newspaper,
+  Pin,
+  Calendar,
+  User,
+  Building2,
   TrendingUp,
   Clock,
   Search,
@@ -20,7 +20,8 @@ import {
   ChevronDown,
   SortAsc,
   SortDesc,
-  Loader2
+  Loader2,
+  ListFilter,
 } from 'lucide-react';
 import { formatDistanceToNow, format, isAfter, subDays } from 'date-fns';
 import Link from 'next/link';
@@ -34,6 +35,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
 } from '@/components/ui/dropdown-menu';
 import { Skeleton } from '@/components/ui/skeleton';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -85,16 +88,16 @@ const NewsCard = ({ news, variant = 'default' }: { news: NewsWithVTC; variant?: 
         transition={{ duration: 0.2 }}
         className={cn(
           "bg-zinc-900 rounded-xl p-6 border-2 transition-all cursor-pointer h-full",
-          variant === 'featured' 
-            ? "border-yellow-500/30 hover:border-yellow-500/60 shadow-lg shadow-yellow-500/10" 
+          variant === 'featured'
+            ? "border-yellow-500/30 hover:border-yellow-500/60 shadow-lg shadow-yellow-500/10"
             : "border-white/10 hover:border-red-500/50"
         )}
       >
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
             {news.vtc.logo ? (
-              <img 
-                src={news.vtc.logo} 
+              <img
+                src={news.vtc.logo}
                 alt={news.vtc.name}
                 className="w-8 h-8 rounded-lg object-cover"
               />
@@ -125,7 +128,7 @@ const NewsCard = ({ news, variant = 'default' }: { news: NewsWithVTC; variant?: 
             )}
           </div>
         </div>
-        
+
         <h3 className={cn(
           "font-bold text-white mb-3 line-clamp-2",
           variant === 'featured' ? "text-xl" : "text-lg"
@@ -133,13 +136,13 @@ const NewsCard = ({ news, variant = 'default' }: { news: NewsWithVTC; variant?: 
           {news.title}
         </h3>
         <p className="text-gray-300 text-sm mb-4 line-clamp-3">{news.content_summary}</p>
-        
+
         <div className="flex items-center justify-between text-gray-400 text-sm">
           <div className="flex items-center space-x-2">
             <User className="w-4 h-4" />
             <span className="truncate max-w-[150px]">{news.author}</span>
           </div>
-          <time 
+          <time
             dateTime={news.published_at}
             className="flex items-center space-x-2"
             title={format(new Date(news.published_at), 'PPpp')}
@@ -163,6 +166,8 @@ export default function NewsPage() {
   const [sortOption, setSortOption] = useState<SortOption>('newest');
   const [filterOption, setFilterOption] = useState<FilterOption>('all');
   const [showAllSources, setShowAllSources] = useState(false);
+  const [visibleArticles, setVisibleArticles] = useState(25);
+  const [articlesPerPage, setArticlesPerPage] = useState('25');
 
   const fetchNewsData = useCallback(async () => {
     try {
@@ -198,13 +203,13 @@ export default function NewsPage() {
       });
 
       const vtcsWithNewsResults = await Promise.all(vtcsWithNewsPromises);
-      
+
       // Filter VTCs that have news
       const vtcsWithActualNews = vtcsWithNewsResults.filter(vtc => vtc.news.length > 0);
       setVTCsWithNews(vtcsWithActualNews);
 
       // Create flat array of all news with VTC info
-      const flatNews = vtcsWithNewsResults.flatMap(vtc => 
+      const flatNews = vtcsWithNewsResults.flatMap(vtc =>
         vtc.news.map(news => ({
           ...news,
           vtc: vtc
@@ -238,7 +243,7 @@ export default function NewsPage() {
     // Apply search filter
     if (searchTerm) {
       const searchLower = searchTerm.toLowerCase();
-      filtered = filtered.filter(news => 
+      filtered = filtered.filter(news =>
         news.title.toLowerCase().includes(searchLower) ||
         news.content_summary.toLowerCase().includes(searchLower) ||
         news.vtc.name.toLowerCase().includes(searchLower) ||
@@ -252,7 +257,7 @@ export default function NewsPage() {
         filtered = filtered.filter(news => news.pinned);
         break;
       case 'recent':
-        filtered = filtered.filter(news => 
+        filtered = filtered.filter(news =>
           isAfter(new Date(news.published_at), subDays(new Date(), 7))
         );
         break;
@@ -286,20 +291,33 @@ export default function NewsPage() {
     total: allNews.length,
     pinned: allNews.filter(news => news.pinned).length,
     activeVTCs: vtcsWithNews.length,
-    recent: allNews.filter(news => 
+    recent: allNews.filter(news =>
       isAfter(new Date(news.published_at), subDays(new Date(), 7))
     ).length
   }), [allNews, vtcsWithNews]);
 
-  const pinnedNews = useMemo(() => 
+  const pinnedNews = useMemo(() =>
     processedNews.filter(news => news.pinned).slice(0, 6),
     [processedNews]
   );
 
-  const regularNews = useMemo(() => 
+  const regularNews = useMemo(() =>
     processedNews.filter(news => !news.pinned || filterOption !== 'all'),
     [processedNews, filterOption]
   );
+
+  const paginatedNews = useMemo(() => {
+    return regularNews.slice(0, visibleArticles);
+  }, [regularNews, visibleArticles]);
+
+  const handleLoadMore = () => {
+    setVisibleArticles(prev => prev + parseInt(articlesPerPage, 10));
+  };
+
+  useEffect(() => {
+    setVisibleArticles(parseInt(articlesPerPage, 10));
+  }, [articlesPerPage]);
+
 
   if (loading) {
     return (
@@ -349,11 +367,11 @@ export default function NewsPage() {
   return (
     <div className="min-h-screen bg-black">
       <Navigation />
-      
+
       <div className="pt-32 pb-12 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-12"
@@ -363,7 +381,7 @@ export default function NewsPage() {
               VTC News Hub
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                            Stay updated with the latest news, announcements, and updates from Virtual Trucking Companies across the TruckersMP community.
+              Stay updated with the latest news, announcements, and updates from Virtual Trucking Companies across the TruckersMP community.
             </p>
           </motion.div>
 
@@ -431,7 +449,7 @@ export default function NewsPage() {
                   className="pl-10 bg-zinc-900 border-white/10 text-white placeholder:text-gray-500"
                 />
               </div>
-              
+
               <div className="flex gap-2">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -444,27 +462,27 @@ export default function NewsPage() {
                   <DropdownMenuContent align="end" className="bg-zinc-900 border-white/10">
                     <DropdownMenuLabel className="text-gray-400">Filter by</DropdownMenuLabel>
                     <DropdownMenuSeparator className="bg-white/10" />
-                    <DropdownMenuItem 
+                    <DropdownMenuItem
                       onClick={() => setFilterOption('all')}
                       className={cn("text-white", filterOption === 'all' && "bg-red-500/20")}
                     >
                       All Articles
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
+                    <DropdownMenuItem
                       onClick={() => setFilterOption('pinned')}
                       className={cn("text-white", filterOption === 'pinned' && "bg-red-500/20")}
                     >
                       <Pin className="w-4 h-4 mr-2" />
                       Pinned Only
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
+                    <DropdownMenuItem
                       onClick={() => setFilterOption('recent')}
                       className={cn("text-white", filterOption === 'recent' && "bg-red-500/20")}
                     >
                       <Clock className="w-4 h-4 mr-2" />
                       Recent (7 days)
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
+                    <DropdownMenuItem
                       onClick={() => setFilterOption('verified')}
                       className={cn("text-white", filterOption === 'verified' && "bg-red-500/20")}
                     >
@@ -485,28 +503,28 @@ export default function NewsPage() {
                   <DropdownMenuContent align="end" className="bg-zinc-900 border-white/10">
                     <DropdownMenuLabel className="text-gray-400">Sort by</DropdownMenuLabel>
                     <DropdownMenuSeparator className="bg-white/10" />
-                    <DropdownMenuItem 
+                    <DropdownMenuItem
                       onClick={() => setSortOption('newest')}
                       className={cn("text-white", sortOption === 'newest' && "bg-red-500/20")}
                     >
                       <SortDesc className="w-4 h-4 mr-2" />
                       Newest First
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
+                    <DropdownMenuItem
                       onClick={() => setSortOption('oldest')}
                       className={cn("text-white", sortOption === 'oldest' && "bg-red-500/20")}
                     >
                       <SortAsc className="w-4 h-4 mr-2" />
                       Oldest First
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
+                    <DropdownMenuItem
                       onClick={() => setSortOption('vtc')}
                       className={cn("text-white", sortOption === 'vtc' && "bg-red-500/20")}
                     >
                       <Building2 className="w-4 h-4 mr-2" />
                       VTC Name
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
+                    <DropdownMenuItem
                       onClick={() => setSortOption('author')}
                       className={cn("text-white", sortOption === 'author' && "bg-red-500/20")}
                     >
@@ -516,9 +534,9 @@ export default function NewsPage() {
                   </DropdownMenuContent>
                 </DropdownMenu>
 
-                <Button 
-                  onClick={handleRefresh} 
-                  variant="outline" 
+                <Button
+                  onClick={handleRefresh}
+                  variant="outline"
                   className="border-white/10 hover:text-white hover:bg-zinc-900"
                   disabled={refreshing}
                 >
@@ -540,7 +558,7 @@ export default function NewsPage() {
 
           {/* Featured/Pinned News */}
           {pinnedNews.length > 0 && filterOption === 'all' && !searchTerm && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -570,22 +588,45 @@ export default function NewsPage() {
 
           {/* All News */}
           <div>
-            <h2 className="text-3xl font-bold text-white mb-8 flex items-center justify-between">
-              <span>{filterOption === 'all' && !searchTerm ? 'Latest News' : 'News Articles'}</span>
-              {regularNews.length > 0 && (
-                <span className="text-base font-normal text-gray-400">
-                  {regularNews.length} article{regularNews.length !== 1 ? 's' : ''}
-                </span>
-              )}
-            </h2>
-            
+            <div className="flex flex-col md:flex-row items-center justify-between mb-8">
+              <h2 className="text-3xl font-bold text-white mb-4 md:mb-0 flex items-center">
+                <span>{filterOption === 'all' && !searchTerm ? 'Latest News' : 'News Articles'}</span>
+              </h2>
+              <div className="flex items-center gap-2">
+                {regularNews.length > 0 && (
+                  <span className="text-base font-normal text-gray-400">
+                    Showing {paginatedNews.length} of {regularNews.length} article{regularNews.length !== 1 ? 's' : ''}
+                  </span>
+                )}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="border-white/10 hover:text-white hover:bg-zinc-900">
+                      <ListFilter className="w-4 h-4 mr-2" />
+                      Show: {articlesPerPage}
+                      <ChevronDown className="w-4 h-4 ml-2" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="bg-zinc-900 border-white/10">
+                    <DropdownMenuRadioGroup value={articlesPerPage} onValueChange={setArticlesPerPage}>
+                      <DropdownMenuLabel className="text-gray-400">Articles per page</DropdownMenuLabel>
+                      <DropdownMenuSeparator className="bg-white/10" />
+                      <DropdownMenuRadioItem value="25" className="text-white">25</DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="50" className="text-white">50</DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="75" className="text-white">75</DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="100" className="text-white">100</DropdownMenuRadioItem>
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </div>
+
             <AnimatePresence mode="popLayout">
-              {regularNews.length > 0 ? (
-                <motion.div 
+              {paginatedNews.length > 0 ? (
+                <motion.div
                   layout
                   className="grid grid-cols-1 gap-6"
                 >
-                  {regularNews.map((news, index) => (
+                  {paginatedNews.map((news, index) => (
                     <motion.div
                       key={`${news.vtc.id}-${news.id}`}
                       layout
@@ -599,7 +640,7 @@ export default function NewsPage() {
                   ))}
                 </motion.div>
               ) : (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="text-center py-16 bg-zinc-900 rounded-xl border-2 border-white/10"
@@ -621,10 +662,17 @@ export default function NewsPage() {
                 </motion.div>
               )}
             </AnimatePresence>
+            {visibleArticles < regularNews.length && (
+              <div className="mt-8 text-center">
+                <Button onClick={handleLoadMore} variant="outline" className="hover:text-white border-white/10 hover:bg-red-500/20">
+                  Load More
+                </Button>
+              </div>
+            )}
           </div>
 
           {/* VTC News Sources */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
@@ -642,7 +690,7 @@ export default function NewsPage() {
                 </Button>
               )}
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               <AnimatePresence>
                 {vtcsWithNews
@@ -659,8 +707,8 @@ export default function NewsPage() {
                         <div className="bg-zinc-900 rounded-xl p-6 border-2 border-white/10 hover:border-red-500/50 transition-all cursor-pointer h-full group">
                           <div className="flex items-center space-x-4 mb-4">
                             {vtc.logo ? (
-                              <img 
-                                src={vtc.logo} 
+                              <img
+                                src={vtc.logo}
                                 alt={vtc.name}
                                 className="w-12 h-12 rounded-lg object-cover"
                               />
@@ -676,7 +724,7 @@ export default function NewsPage() {
                               <div className="text-gray-400 text-sm">[{vtc.tag}]</div>
                             </div>
                           </div>
-                          
+
                           <div className="flex items-center justify-between text-sm">
                             <div className="text-gray-400">
                               <Newspaper className="w-4 h-4 inline mr-1" />

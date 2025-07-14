@@ -580,7 +580,8 @@ export default function SearchPage() {
       }
     } catch (err: any) {
       const errorMessage = err.response?.data?.message || err.message || 'Failed to find player';
-      setError(errorMessage);
+      const errorType = searchType === 'player' ? "Player" : "VTC"
+      errorMessage === 'API Error: 404' ? setError(`${errorType} Not Found`) : setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -735,9 +736,9 @@ export default function SearchPage() {
                 transition={{ duration: 0.2 }}
               >
                 <Alert className="bg-red-500/20 border-red-500/50 mb-8">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertTitle>Search Error</AlertTitle>
-                  <AlertDescription>{error}</AlertDescription>
+                  <AlertCircle color='white' className="h-4 w-4" />
+                  <AlertTitle className='text-white'>Search Error</AlertTitle>
+                  <AlertDescription className='text-white'>{error}</AlertDescription>
                 </Alert>
               </motion.div>
             )}

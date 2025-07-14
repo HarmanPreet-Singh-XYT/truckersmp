@@ -621,7 +621,7 @@ export default function EventDetailPage() {
                     {Object.keys(event.dlcs).length > 0 ? (
                       <>
                         <div className="text-yellow-400 text-sm mb-2">Required DLCs</div>
-                        {Object.entries(event.dlcs).map(([dlcId, dlcName]) => (
+                        {event.dlcs != null && Object.entries(event.dlcs).map(([dlcId, dlcName]) => (
                           <a
                             key={dlcId}
                             href={`https://store.steampowered.com/app/${dlcId}`}
